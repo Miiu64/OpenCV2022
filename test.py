@@ -1,6 +1,6 @@
 import cv2 as cv
 
-capture = cv.VideoCapture('Videos\Test.mp4')
+capture = cv.VideoCapture(1)
 
 #While loop to show frame by frame
 while True:
