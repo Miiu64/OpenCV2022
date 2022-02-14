@@ -10,17 +10,17 @@ blank = np.zeros(img.shape, dtype = 'uint8')
 lower_green = np.array([230, 230, 230])
 upper_green = np.array([255, 255, 255])
 
-mask = cv.inRange(img , lower_green, upper_green)  
+mask = cv.inRange(img , lower_green, upper_green)
+cv.imwrite('Photos\mask.png', mask)  
 
-#img_rgb = mask
-img_gray = cv.cvtColor(mask, cv.COLOR_)
-template = cv.imread('Photos/template.png', 0)
+img_rgb = cv.imread('Photos\mask.png')
+img_gray = cv.cvtColor(img_rgb, cv.COLOR_BGR2GRAY)
+template = cv.imread('Photos/templatezoomedout.png',0)
 w, h = template.shape[::-1]
 res = cv.matchTemplate(img_gray,template,cv.TM_CCOEFF_NORMED)
-threshold = 0.1
+threshold = 0.9
 loc = np.where( res >= threshold)
 for pt in zip(*loc[::-1]):
-    cv.rectangle(mask, pt, (pt[0] + w, pt[1] + h), (0,0,255), 2)
-#cv.imwrite('res.png',img_rgb)
-cv.imshow('lol', mask)
+    cv.rectangle(img_rgb, pt, (pt[0] + w, pt[1] + h), (0,0,255), 2)
+cv.imshow('Final Result',img_rgb)
 cv.waitKey(0)
